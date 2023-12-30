@@ -13,7 +13,7 @@ export class ServerRouter<T extends BasicTypedRouter> {
 
 	constructor (router: T, opts?: RouterOptions) {
 
-		this.router = router;
+		this.router = Object.fromEntries(Object.entries(router).map(([key, value]) => ([key.toLowerCase(), value]))) as T;
 
 		let pathname: string;
 		switch (typeof opts?.endpoint) {
@@ -35,7 +35,25 @@ export class ServerRouter<T extends BasicTypedRouter> {
 			default: pathname = '/';
 		}
 		
-		this.endpointPath = (pathname.endsWith('/') ? pathname : pathname + '/').replace(/[\\\/]+/g, '/');
+		this.endpointPath = pathname.endsWith('/') ? pathname : pathname + '/';
+	};
+
+	async invoke(request: Request): Promise<Response> {
+
+		const { pathname } = new URL(request.url);
+		const procedureName = pathname.slice(this.endpointPath.length + (pathname.endsWith('/') ? 1 : 0));
+
+		const procedureCtx = this.router[procedureName];
+		if (!procedureCtx) {
+			console.error(`Procedure ${procedureName} not found`);
+			return new Response(JSON.stringify({
+				error_text: `procedure ${procedureName} not found`
+			}), {
+				status: 404
+			});
+		}
+
+		return await procedureCtx.handler(request);
 	};
 
 };
