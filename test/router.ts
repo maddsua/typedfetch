@@ -5,7 +5,10 @@ const routerMethods = {
 	test: method((props: { test: number }) => ({ result: 22 }), {
 		type: 'query'
 	}),
-	check: method(() => ({ live: true }),)
+	check: method((input) => {
+		console.log(input);
+		return { live: true };
+	})
 };
 
 const handler = (props: { test: number }) => ({ result: 22 });
@@ -20,7 +23,7 @@ const router = new ServerRouter(routerMethods, {
 
 type RouterType = typeof router;
 
-const testRequest = new Request('http://test.com/api/check/', {
+const testRequest = new Request('http://test.com/api/check/?data=test', {
 	headers: {
 
 	}
