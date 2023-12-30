@@ -44,7 +44,7 @@ export class ServerRouter<T extends BasicTypedRouter> {
 	async invoke(request: Request): Promise<Response> {
 
 		const { pathname, searchParams } = new URL(request.url);
-		const procedureName = pathname.slice(this.endpointPath.length + (pathname.endsWith('/') ? 1 : 0));
+		const procedureName = pathname.slice(this.endpointPath.length, pathname.endsWith('/') ? -1 : undefined);
 
 		const procedureCtx = this.router[procedureName];
 		if (!procedureCtx) {
