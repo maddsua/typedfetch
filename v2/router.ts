@@ -8,12 +8,12 @@ export class TypedRouterMethod<R extends object, S extends object, T extends Typ
 	opts: TypedRouterMethodOptions;
 	handler: (input: R) => Promise<S> | S;
 
-	constructor(handler: (request: R) => Promise<S> | S, opts?: T) {
+	constructor(handler: (input: R) => Promise<S> | S, opts?: T) {
 		this.handler = handler;
 		this.opts = opts || { type: 'query' };
 	};
 };
 
-export const method = <R extends object, S extends object, T extends TypedRouterMethodOptions>(handler: (request: R) => Promise<S> | S, opts?: T) => new TypedRouterMethod(handler, opts);
+export const method = <R extends object, S extends object, T extends TypedRouterMethodOptions>(handler: (input: R) => Promise<S> | S, opts?: T) => new TypedRouterMethod(handler, opts);
 
 export type RouterType<R extends object, S extends object, T extends TypedRouterMethodOptions> = Record<string, TypedRouterMethod<R, S, T>>;
