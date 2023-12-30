@@ -32,4 +32,4 @@ console.log(response, await response.text());
 
 const clientRouter = new ClientRouter<typeof routerMethods>('/here');
 clientRouter.query.check({ date: 'now' });
-//clientRouter.query.
+//clientRouter.mutate.
