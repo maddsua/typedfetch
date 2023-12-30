@@ -6,7 +6,7 @@ export interface TypedRouterMethodOptions {
 export class TypedRouterMethod<R extends object, S extends object, T extends TypedRouterMethodOptions> {
 
 	opts: TypedRouterMethodOptions;
-	handler: (request: R) => Promise<S> | S;
+	handler: (input: R) => Promise<S> | S;
 
 	constructor(handler: (request: R) => Promise<S> | S, opts?: T) {
 		this.handler = handler;
