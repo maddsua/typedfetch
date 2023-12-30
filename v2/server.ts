@@ -40,7 +40,7 @@ export class ServerRouter<T extends BasicTypedRouter> {
 
 	async invoke(request: Request): Promise<Response> {
 
-		const { pathname } = new URL(request.url);
+		const { pathname, searchParams } = new URL(request.url);
 		const procedureName = pathname.slice(this.endpointPath.length + (pathname.endsWith('/') ? 1 : 0));
 
 		const procedureCtx = this.router[procedureName];
@@ -48,12 +48,28 @@ export class ServerRouter<T extends BasicTypedRouter> {
 			console.error(`Procedure ${procedureName} not found`);
 			return new Response(JSON.stringify({
 				error_text: `procedure ${procedureName} not found`
-			}), {
-				status: 404
-			});
+			}), { status: 404 });
 		}
 
-		return await procedureCtx.handler(request);
-	};
+		try {
 
+			const result = await procedureCtx.handler(
+				request.method === 'POST' ?
+					await request.json() :
+					Object.fromEntries(searchParams.entries())
+			);
+
+			return new Response(JSON.stringify(result), { status: 200 });
+	
+		} catch (error) {
+
+			const errorMessage = (error as Error | null)?.message || JSON.stringify(error);
+
+			console.error('Route crashed:', errorMessage);
+
+			return new Response(JSON.stringify({
+				error_text: `Route crashed: ${errorMessage}`
+			}), { status: 500 });
+		}
+	};
 };
