@@ -15,3 +15,5 @@ export class TypedRouterMethod<R extends object, S extends object, T extends Typ
 };
 
 export const method = <R extends object, S extends object, T extends TypedRouterMethodOptions>(handler: (request: R) => Promise<S> | S, opts?: T) => new TypedRouterMethod(handler, opts);
+
+export type RouterType<R extends object, S extends object, T extends TypedRouterMethodOptions> = Record<string, TypedRouterMethod<R, S, T>>;
