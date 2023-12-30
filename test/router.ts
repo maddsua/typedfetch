@@ -24,11 +24,7 @@ const router = new ServerRouter(routerMethods, {
 
 type RouterType = typeof router;
 
-const testRequest = new Request('http://test.com/api/check/?data=test', {
-	headers: {
-
-	}
-});
+const testRequest = new Request('http://test.com/api/check/?data=test');
 
 const response = await router.invoke(testRequest);
 
