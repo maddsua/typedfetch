@@ -9,7 +9,7 @@ export class ClientRouter<T extends RouterType<any, any, TypedRouterMethodOption
 
 	constructor (endpoint: string) {
 		this.endpoint = endpoint;
-		this.query = {} as { [K in keyof T]: T[K] extends { type: 'mutation' } ? never : T[K]['handler'] };
-		this.mutate = {} as { [K in keyof T]: T[K] extends { type: 'mutation' } ? T[K]['handler'] : never };
+		this.query = {} as any;
+		this.mutate = {} as any;
 	}
 };
