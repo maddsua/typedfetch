@@ -3,7 +3,7 @@ import type { TypedRouterMethod } from "./router.ts";
 type BasicTypedRouter = Record<string, TypedRouterMethod<any, any, any>>;
 
 interface RouterOptions {
-	endpoint?: string | URL;
+	endpoint?: `/${string}` | `http://${string}` | `https://${string}` | URL;
 };
 
 export class ServerRouter<T extends BasicTypedRouter> {
@@ -20,11 +20,11 @@ export class ServerRouter<T extends BasicTypedRouter> {
 
 			case 'string': {
 
-				if (/^http(s)?\:\/\//.test(opts.endpoint)) {
+				if (opts.endpoint.startsWith('/'))
+					pathname = opts.endpoint;
+				else if (/^http(s)?\:\/\//.test(opts.endpoint))
 					pathname = new URL(opts.endpoint).pathname;
-				} else {
-					pathname = (opts.endpoint.startsWith('/') ? opts.endpoint : '/' + opts.endpoint);
-				}
+				else throw new Error('Endpoing pathname should start from root (/your_path) or use http scheme')
 
 			} break;
 
