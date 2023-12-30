@@ -13,6 +13,8 @@ const test = method(handler);
 
 type MethodsType = typeof routerMethods;
 
-const bigRouter = new ServerRouter(routerMethods, new URL('http://test.com'));
+const bigRouter = new ServerRouter(routerMethods, {
+	endpoint: new URL('http://test.com')
+});
 
 type RouterType = typeof bigRouter;
