@@ -9,7 +9,7 @@ const routerMethods = {
 	check: method((input: { date: string }) => {
 		console.log(input);
 		return { live: true };
-	})
+	}, {type: 'mutation'})
 };
 
 const handler = (props: { test: number }) => ({ result: 22 });
@@ -32,3 +32,4 @@ console.log(response, await response.text());
 
 const clientRouter = new ClientRouter<typeof routerMethods>('/here');
 clientRouter.query.check({ date: 'now' });
+//clientRouter.query.
