@@ -13,7 +13,10 @@ export class ServerRouter<T extends BasicTypedRouter> {
 
 	constructor (router: T, opts?: RouterOptions) {
 
-		this.router = Object.fromEntries(Object.entries(router).map(([key, value]) => ([key.toLowerCase(), value]))) as T;
+		this.router = Object.fromEntries(Object.entries(router).map(([key, value]) => ([
+			(key.slice(key.startsWith('/') ? 1 : 0, key.endsWith('/') ? -1 : undefined)).toLowerCase(),
+			value
+		]))) as T;
 
 		let pathname: string;
 		switch (typeof opts?.endpoint) {
