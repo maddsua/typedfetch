@@ -13,8 +13,18 @@ const test = method(handler);
 
 type MethodsType = typeof routerMethods;
 
-const bigRouter = new ServerRouter(routerMethods, {
-	endpoint: new URL('http://test.com')
+const router = new ServerRouter(routerMethods, {
+	endpoint: new URL('http://test.com/api')
 });
 
-type RouterType = typeof bigRouter;
+type RouterType = typeof router;
+
+const testRequest = new Request('http://test.com/api/test', {
+	headers: {
+
+	}
+});
+
+const response = await router.invoke(testRequest);
+
+console.log(response, await response.text());
