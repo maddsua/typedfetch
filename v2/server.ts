@@ -1,4 +1,4 @@
-import { method, type TypedRouterMethod } from "./router.ts";
+import type { TypedRouterMethod } from "./router.ts";
 
 type BasicTypedRouter = Record<string, TypedRouterMethod<any, any, any>>;
 
