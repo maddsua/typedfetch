@@ -1,3 +1,4 @@
+import { ClientRouter } from "../v2/client.ts";
 import { method } from "../v2/router.ts";
 import { ServerRouter } from "../v2/server.ts";
 
@@ -32,3 +33,5 @@ const testRequest = new Request('http://test.com/api/check/?data=test', {
 const response = await router.invoke(testRequest);
 
 console.log(response, await response.text());
+
+const clientRouter = new ClientRouter('/here');
