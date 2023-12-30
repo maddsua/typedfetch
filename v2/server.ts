@@ -35,7 +35,7 @@ export class ServerRouter<T extends BasicTypedRouter> {
 			default: pathname = '/';
 		}
 		
-		this.endpointPath = pathname.endsWith('/') ? pathname : pathname + '/';
+		this.endpointPath = (pathname.endsWith('/') ? pathname : pathname + '/').replace(/[\\\/]+/g, '/');
 	};
 
 };
