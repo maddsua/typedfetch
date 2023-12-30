@@ -6,11 +6,6 @@ interface RouterOptions {
 	endpoint?: string | URL;
 };
 
-const getNormalizedEndpoint = (endpoint: string | URL) => {
-	const pathname = typeof endpoint === 'string' ? (/^http(s)?\:\/\//.test(endpoint) ? new URL(endpoint).pathname : (endpoint.startsWith('/') ? endpoint : '/' + endpoint)) : endpoint.pathname;
-	return pathname;
-};
-
 export class ServerRouter<T extends BasicTypedRouter> {
 
 	router: T;
