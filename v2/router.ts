@@ -1,9 +1,9 @@
 
-interface TypedRouterMethodOptions {
+export interface TypedRouterMethodOptions {
 	type?: 'query' | 'mutation';
 };
 
-class TypedRouterMethod<R extends object, S extends object, T extends TypedRouterMethodOptions> {
+export class TypedRouterMethod<R extends object, S extends object, T extends TypedRouterMethodOptions> {
 
 	opts: TypedRouterMethodOptions;
 	handler: (request: R) => Promise<S> | S;
@@ -14,14 +14,4 @@ class TypedRouterMethod<R extends object, S extends object, T extends TypedRoute
 	};
 };
 
-const router = {
-	test: new TypedRouterMethod((props: { test: number }) => ({ result: 22 }), {
-		type: 'query'
-	})
-};
-
-const handler = (props: { test: number }) => ({ result: 22 });
-
-const test = new TypedRouterMethod(handler);
-
-type Router = typeof router;
+export const method = <R extends object, S extends object, T extends TypedRouterMethodOptions>(handler: (request: R) => Promise<S> | S, opts?: T) => new TypedRouterMethod(handler, opts);
