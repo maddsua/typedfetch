@@ -5,12 +5,12 @@ export interface TypedRouterMethodOptions {
 
 export class TypedRouterMethod<R extends object, S extends object, T extends TypedRouterMethodOptions> {
 
-	opts: TypedRouterMethodOptions;
+	opts: T;
 	handler: (input: R) => Promise<S> | S;
 
 	constructor(handler: (input: R) => Promise<S> | S, opts?: T) {
 		this.handler = handler;
-		this.opts = opts || { type: 'query' };
+		this.opts = opts || { type: 'query' } as T;
 	};
 };
 

@@ -1,7 +1,7 @@
 import type { RouterType, TypedRouterMethodOptions } from "./router.ts";
 
 
-export class ClientRouter<T extends RouterType<any, any, TypedRouterMethodOptions>> {
+export class ClientRouter<T extends RouterType<any, any, any>> {
 
 	endpoint: string = '/';
 	query: { [K in keyof T]: T[K]['opts']['type'] extends 'mutation' ? T[K]['opts']['type'] : T[K]['handler'] };
