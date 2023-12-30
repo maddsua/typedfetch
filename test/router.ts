@@ -6,7 +6,7 @@ const routerMethods = {
 	test: method((props: { test: number }) => ({ result: 22 }), {
 		type: 'query'
 	}),
-	check: method((input) => {
+	check: method((input: { date: string }) => {
 		console.log(input);
 		return { live: true };
 	})
@@ -31,3 +31,4 @@ const response = await router.invoke(testRequest);
 console.log(response, await response.text());
 
 const clientRouter = new ClientRouter<typeof routerMethods>('/here');
+clientRouter.query.check({ date: 'now' });
