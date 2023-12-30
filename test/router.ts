@@ -34,4 +34,4 @@ const response = await router.invoke(testRequest);
 
 console.log(response, await response.text());
 
-const clientRouter = new ClientRouter('/here');
+const clientRouter = new ClientRouter<typeof routerMethods>('/here');
