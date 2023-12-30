@@ -1,4 +1,4 @@
-import type { TypedRouterMethod } from "./router.ts";
+import { method, type TypedRouterMethod } from "./router.ts";
 
 type BasicTypedRouter = Record<string, TypedRouterMethod<any, any, any>>;
 
@@ -52,6 +52,11 @@ export class ServerRouter<T extends BasicTypedRouter> {
 		}
 
 		try {
+
+			if (procedureCtx.opts.type === 'mutation' && request.method !== 'POST')
+				throw new Error(`Procedure "${procedureName}" is a mutation and requires POST http method`);
+			if (procedureCtx.opts.type !== 'mutation' && request.method !== 'GET')
+				throw new Error(`Procedure "${procedureName}" is a query and requires GET http method`);
 
 			const result = await procedureCtx.handler(
 				request.method === 'POST' ?
